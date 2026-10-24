@@ -1,0 +1,194 @@
+{
+  "documents": [
+    {
+      "doc_id": "instruction_dou",
+      "parser": "instruction",
+      "access": "all",
+      "title": "Инструкция по документационному обеспечению управления и документообороту Организации",
+      "short": "Инструкция по ДОУ",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/instruction_dou_v1.pdf",
+          "approved": "приказ Организации от 15 октября 2026 г. № ОД-184",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "3b7461fb98911f39d3e8a951bee2cdddfb3ab4b98d6c135f146d130e01d96d90",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    },
+    {
+      "doc_id": "matrix_visas",
+      "parser": "matrix",
+      "access": "all",
+      "title": "Матрица обязательного визирования проектов внутренних и внешних документов Организации",
+      "short": "Матрица визирования",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/matrix_v1.docx",
+          "approved": "",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "9d1c59e89bc833ed813b738e3709f23ecb0a247f26e13394ca6dae6542756e83",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    },
+    {
+      "doc_id": "modules_guide",
+      "parser": "generic",
+      "access": "all",
+      "title": "Методические рекомендации по работе с модульными документами",
+      "short": "Метод. рекомендации по модулям",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/modules_guide_v1.docx",
+          "approved": "",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "95a0a1d9881e3bd74df7b1ab7fa942d5d2f5ec0696eea6ae53dc5accaf93ba8e",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    },
+    {
+      "doc_id": "module_772f79",
+      "parser": "module",
+      "access": "all",
+      "title": "Модуль приказа о вводе в эксплуатацию информационной системы",
+      "short": "Модуль приказа о вводе в эксплуатацию информационной системы",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/modules/Модуль_приказа_о_вводе_в_эксплуатацию_информационной_системы.docx",
+          "approved": "",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "ad933ae5158d8409ebc3db68482c28d53d86dd41a31d141f4a99f0776943e1a5",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    },
+    {
+      "doc_id": "module_f2d9f9",
+      "parser": "module",
+      "access": "all",
+      "title": "Модуль приказа о назначении ответственных за делопроизводство",
+      "short": "Модуль приказа о назначении ответственных за делопроизводство",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/modules/Модуль_приказа_о_назначении_ответственных_за_делопроизводство.docx",
+          "approved": "",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "4e8e4e3a38e027f209b5fe629b3bb9ddc040a713e421742f616b3788c35b9377",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    },
+    {
+      "doc_id": "module_501376",
+      "parser": "module",
+      "access": "all",
+      "title": "Модуль приказа о приеме и передаче дел и имущества",
+      "short": "Модуль приказа о приеме и передаче дел и имущества",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/modules/Модуль_приказа_о_приеме_и_передаче_дел_и_имущества.docx",
+          "approved": "",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "256f38ad302c1241389e28e01db40aa3067dba47779a84bf8d59596768a64635",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    },
+    {
+      "doc_id": "module_63cab9",
+      "parser": "module",
+      "access": "all",
+      "title": "Модуль приказа об утверждении и введении в действие локального",
+      "short": "Модуль приказа об утверждении и введении в действие локального",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/modules/Модуль_приказа_об_утверждении_и_введении_в_действие_локального.docx",
+          "approved": "",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "64ae7f0bf70ff5fe8aa4bd3b673ce853db86774dc992f3e51ad1d6f4e655884b",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    },
+    {
+      "doc_id": "module_8d792d",
+      "parser": "module",
+      "access": "all",
+      "title": "Модуль распоряжения о проведении внутреннего аудита процессов",
+      "short": "Модуль распоряжения о проведении внутреннего аудита процессов",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/modules/Модуль_распоряжения_о_проведении_внутреннего_аудита_процессов.docx",
+          "approved": "",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "2521f52a3d763b12999001d5da97631f6b4a939ef957b48cc5dacd89b98ad540",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    },
+    {
+      "doc_id": "module_db7dd6",
+      "parser": "module",
+      "access": "all",
+      "title": "Модуль распоряжения о создании проектного комитета",
+      "short": "Модуль распоряжения о создании проектного комитета",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/modules/Модуль_распоряжения_о_создании_проектного_комитета.docx",
+          "approved": "",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "3287b097c95ab68bc84b9da1baaaea269d2999f1a849aaa2b0f899406fb42380",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    },
+    {
+      "doc_id": "module_03aa06",
+      "parser": "module",
+      "access": "all",
+      "title": "Модуль распоряжения о создании рабочей группы",
+      "short": "Модуль распоряжения о создании рабочей группы",
+      "versions": [
+        {
+          "version": "1",
+          "file": "sources/modules/Модуль_распоряжения_о_создании_рабочей_группы.docx",
+          "approved": "",
+          "effective_from": "2026-11-01",
+          "status": "active",
+          "sha256": "5f594e008ae4b47a297637794d0cc2f0b982072bb085f414582c576d793dbab4",
+          "added_at": "2026-10-23T20:38:03",
+          "added_by": "system"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Портал — демо виджета</title>
+  <style>
+    body { margin: 0; font: 15px/1.5 "Segoe UI", Arial, sans-serif; background: #eef1f5; color: #1d2433; }
+    .top { background: #2a3442; color: #fff; padding: 14px 24px; font-weight: 600; }
+    .wrap { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+    .card { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+    h2 { margin: 0 0 8px; font-size: 17px; } p { margin: 0; color: #556; }
+    code { background: #f2f4f7; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="top">Внутренний портал (макет для демонстрации встраивания)</div>
+  <div class="wrap">
+    <div class="card"><h2>Раздел документационного обеспечения</h2>
+      <p>Здесь размещаются Инструкция, матрицы, шаблоны и методические материалы. Помощник открывается кнопкой в правом нижнем углу.</p></div>
+    <div class="card"><h2>Как встроить помощник</h2>
+      <p>Достаточно одной строки на странице портала: <code>&lt;script src="http://сервер-помощника/widget.js" defer&gt;&lt;/script&gt;</code></p></div>
+  </div>
+  <script src="widget.js" defer></script>
+</body>
+</html>

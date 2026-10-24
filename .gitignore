@@ -1,0 +1,13 @@
+# Секреты и данные конкретной установки
+kb/.secret_key
+kb/admin_password.txt
+kb/audit.log.jsonl
+kb/tunnel.log
+kb/index/chunks.json
+kb/generated/
+kb/uploads/
+# Локальное окружение
+__pycache__/
+*.pyc
+.venv/
+.claude/

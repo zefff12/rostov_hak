@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>База знаний</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=27">
+  <style>
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 24px 20px 40px; }
+    .admin-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+    .admin-top svg.logo { width: 44px; height: 48px; }
+    .admin-top .spacer { flex: 1; }
+    .card { background: rgba(255,255,255,.55); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; margin-bottom: 16px; }
+    h2 { font-size: 21px; margin: 0 0 14px; letter-spacing: -0.02em; }
+    .tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .tbl th, .tbl td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .tbl th { color: var(--muted); font-weight: 600; }
+    .scroll { overflow-x: auto; }
+    .ver { font-size: 12px; color: var(--muted); }
+    .ver b.active { color: var(--green); }
+    select, input[type=text], input[type=date], input[type=file] { font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 12px;
+      background: var(--white); color: var(--ink); }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; align-items: end; }
+    label { font-size: 12.5px; color: var(--muted); display: block; }
+    label > * { display: block; width: 100%; margin-top: 4px; }
+    .btn { background: var(--ink); color: #fff; border: none; border-radius: 999px; padding: 11px 20px; font-weight: 600; }
+    .small { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--white); margin-top: 4px; }
+    .msg-line { font-size: 13px; margin-top: 10px; }
+    .pill { display: inline-block; font-size: 11.5px; padding: 1px 9px; border-radius: 999px; background: var(--violet-soft); color: var(--violet-ink); font-weight: 600; }
+  </style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><symbol id="logo" viewBox="0 0 60 64"><path d="M0 64V30C0 13.4 13.4 0 30 0s30 13.4 30 30v34H42V30c0-6.6-5.4-12-12-12s-12 5.4-12 12v34z" fill="currentColor"/></symbol></svg>
+<div class="wrap">
+<div class="admin-top">
+  <svg class="logo"><use href="#logo"/></svg>
+  <div><p class="eyebrow" style="margin:0">Администрирование</p><h1 class="h-page" style="font-size:40px">База знаний</h1></div>
+  <div class="spacer"></div>
+  <span class="kbd" id="st"></span>
+  <a class="btn-outline" href="index.html">← К помощнику</a>
+</div>
+  <div class="card">
+    <h2>Документы базы знаний</h2>
+    <div class="scroll"><table class="tbl" id="docs"><thead><tr><th>Документ</th><th>Редакции</th><th>Фрагментов</th><th>Доступ</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="card" id="uploadCard">
+    <h2>Загрузить новый документ или новую редакцию</h2>
+    <form id="up" class="form-row">
+      <label>Файл (DOCX, PDF, TXT)<input type="file" name="file" accept=".docx,.pdf,.txt" required></label>
+      <label>Документ<select name="doc_id" id="docSel"><option value="">— новый документ —</option></select></label>
+      <label>Наименование<input type="text" name="title" placeholder="для нового документа"></label>
+      <label>Утвержден<input type="text" name="approved" placeholder="приказ от … № …"></label>
+      <label>Действует с<input type="date" name="effective_from"></label>
+      <label>Доступ<select name="access" id="accSel"></select></label>
+      <div><button class="btn">Загрузить и переиндексировать</button></div>
+    </form>
+    <div class="msg-line" id="upMsg"></div>
+  </div>
+  <div class="card" id="auditCard">
+    <h2>Журнал аудита (последние 100 событий)</h2>
+    <div class="scroll"><table class="tbl" id="audit"><thead><tr><th>Время</th><th>Пользователь</th><th>Действие</th><th>Детали</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</div>
+<script>
+(function () {
+  let token = null; try { token = JSON.parse(localStorage.getItem("dou_token2")); } catch {}
+  const H = () => ({ Authorization: "Bearer " + token });
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  let me = null, levels = {};
+
+  async function load() {
+    me = await (await fetch("/api/me", { headers: H() })).json();
+    if (!me.role) { location.href = "index.html"; return; }
+    const isAdmin = me.role === "admin";
+    document.getElementById("uploadCard").style.display = isAdmin ? "" : "none";
+    document.getElementById("auditCard").style.display = isAdmin ? "" : "none";
+    const r = await fetch("/api/admin/documents", { headers: H() });
+    if (!r.ok) { document.querySelector(".wrap").innerHTML = "<div class='card'>Недостаточно прав</div>"; return; }
+    const d = await r.json(); levels = d.access_levels;
+    document.getElementById("st").textContent = `индекс: ${d.status.index}, эмбеддинги: ${d.status.embeddings ? "да" : "нет"}`;
+    const tb = document.querySelector("#docs tbody"); tb.innerHTML = "";
+    const sel = document.getElementById("docSel"); sel.length = 1;
+    for (const doc of d.documents) {
+      const vers = doc.versions.map((v) => `<div class="ver"><b class="${v.status}">ред. ${v.version}</b> · ${v.status === "active" ? "действующая" : "архив"} · с ${esc(v.effective_from)}${v.approved ? " · " + esc(v.approved) : ""}<br>sha256 ${v.sha256.slice(0, 12)}… · ${esc(v.added_by)} ${esc(v.added_at)}
+        ${isAdmin && v.status !== "active" ? `<button class="small" data-rb="${doc.doc_id}" data-v="${v.version}">сделать действующей</button>` : ""}</div>`).join("");
+      const acc = isAdmin ? `<select data-acc="${doc.doc_id}">${Object.entries(levels).map(([k, l]) => `<option value="${k}" ${k === doc.access ? "selected" : ""}>${l}</option>`).join("")}</select>`
+                          : `<span class="pill">${esc(levels[doc.access])}</span>`;
+      tb.insertAdjacentHTML("beforeend", `<tr><td><b>${esc(doc.short)}</b><div class="ver">${esc(doc.title)}</div></td><td>${vers}</td><td>${doc.chunks}</td><td>${acc}</td><td></td></tr>`);
+      sel.insertAdjacentHTML("beforeend", `<option value="${doc.doc_id}">${esc(doc.short)}</option>`);
+    }
+    document.getElementById("accSel").innerHTML = Object.entries(levels).map(([k, l]) => `<option value="${k}">${l}</option>`).join("");
+    tb.querySelectorAll("[data-acc]").forEach((s) => s.onchange = async () => {
+      await fetch(`/api/admin/documents/${s.dataset.acc}/access`, { method: "POST", headers: { ...H(), "Content-Type": "application/json" }, body: JSON.stringify({ access: s.value }) });
+      setTimeout(load, 1500);
+    });
+    tb.querySelectorAll("[data-rb]").forEach((b) => b.onclick = async () => {
+      await fetch(`/api/admin/documents/${b.dataset.rb}/rollback`, { method: "POST", headers: { ...H(), "Content-Type": "application/json" }, body: JSON.stringify({ version: b.dataset.v }) });
+      setTimeout(load, 1500);
+    });
+    if (isAdmin) {
+      const a = await (await fetch("/api/admin/audit", { headers: H() })).json();
+      document.querySelector("#audit tbody").innerHTML = a.map((x) => {
+        const { ts, user, role, action, ...rest } = x;
+        return `<tr><td>${esc(ts)}</td><td>${esc(user)} <span class="ver">${esc(role)}</span></td><td>${esc(action)}</td><td class="ver">${esc(JSON.stringify(rest, null, 0))}</td></tr>`;
+      }).join("");
+    }
+  }
+  document.getElementById("up").onsubmit = async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const m = document.getElementById("upMsg"); m.textContent = "Загрузка…";
+    const r = await fetch("/api/admin/documents", { method: "POST", headers: H(), body: fd });
+    const d = await r.json();
+    m.textContent = r.ok ? `Загружено: ${d.doc.title}, редакция ${d.doc.versions.at(-1).version}. Идет переиндексация…` : `Ошибка: ${d.detail}`;
+    e.target.reset(); setTimeout(load, 2500);
+  };
+  load();
+})();
+</script>
+</body>
+</html>
